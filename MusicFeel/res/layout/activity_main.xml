@@ -18,9 +18,10 @@
 
 	    <ImageView
 	        android:id="@+id/icono_pantallaprincipal"
-	        android:layout_width="100dp"
+	        android:layout_width="122dp"
 	        android:layout_height="100dp"
 	        android:src="@drawable/ic_launcher" />
+
 	</LinearLayout>
 
 	<LinearLayout 

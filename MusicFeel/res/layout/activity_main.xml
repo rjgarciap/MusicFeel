@@ -36,7 +36,6 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/texto_boton_archivo" />
 
-"
 	    
 	</LinearLayout>
 

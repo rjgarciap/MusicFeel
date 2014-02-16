@@ -13,15 +13,16 @@
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="300dp"
-	    android:orientation="vertical" >
+	    android:orientation="vertical"
+	    android:gravity="center" >
 
 	    <ImageView
 	        android:id="@+id/icono_pantallaprincipal"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="100dp"
+	        android:layout_height="100dp"
 	        android:src="@drawable/ic_launcher" />
-	    
 	</LinearLayout>
+
 	<LinearLayout 
 	    android:layout_width="fill_parent"
         android:layout_height="wrap_content"

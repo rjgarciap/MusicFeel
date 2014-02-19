@@ -5,6 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="texto_boton_archivo">Reproducir desde archivo</string>
     <string name="texto_boton_grabar">Reproducir en vivo</string>
-    <strin name="icono">Icono de la aplicación</strin>
+    <string name="icono">Icono de la aplicación</string>
 
 </resources>

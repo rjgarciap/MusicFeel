@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
@@ -16,6 +17,9 @@ public class MainActivity extends Activity {
 	Button boton_archivo;
 	Button boton_grabar;
 	private Notification.Builder notif;
+	static final int SELECT_MUSIC=123;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,12 +27,6 @@ public class MainActivity extends Activity {
 		boton_archivo= (Button) findViewById(R.id.boton_archivo);
 		boton_grabar= (Button) findViewById(R.id.boton_grabacion);
 		
-		Context nContext = this.getBaseContext();
-		notif = new Notification.Builder(nContext);
-
-		long [] pattern = {1,1000,10};
-		notif.setVibrate(pattern);
-		notif.notify();
 		
 		boton_archivo.setOnClickListener(new View.OnClickListener() {
 			
@@ -55,10 +53,19 @@ public class MainActivity extends Activity {
 	}
 	
 	public void pulsaArchivo(){
-		
+		Intent i = new Intent(this,ListaMusica.class);
+		startActivityForResult(i, SELECT_MUSIC);
 	}
+	
 	public void pulsaGrabar(){
 		
 	}
-
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,Intent data){
+		if(requestCode==RESULT_OK && resultCode==SELECT_MUSIC){
+			String cancionSeleccionada=data.getExtras().getString(null);
+		}
+	}
+	
 }

@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ListaMusica"></activity>
+        <activity android:name="ActivityReproductor"></activity>
     </application>
 
 </manifest>

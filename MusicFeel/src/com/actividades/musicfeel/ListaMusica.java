@@ -128,10 +128,14 @@ public class ListaMusica extends ListActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			 
 			startActivity(i);
+			overridePendingTransition(R.anim.entrada, R.anim.salida);
 		}else{
-			Intent i = new Intent();
-			i.putExtra("resultado",file.toString() );
+			Intent i = new Intent(this,ActivityReproductor.class);
+			i.putExtra("resultado",file.toString());
+			i.putExtra("nombre", nombre);
+			startActivity(i);
 			
 		}
 	}

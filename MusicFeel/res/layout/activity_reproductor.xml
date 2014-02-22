@@ -31,11 +31,18 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_lock_lock" />
 
-        <EditText
-            android:id="@+id/path"
+        <TextView
+            android:id="@+id/nombre_cancion"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:text="Canción" />
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:fadingEdge="horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -48,7 +55,7 @@
         <VideoView
             android:id="@+id/surfaceView"
             android:layout_width="fill_parent"
-            android:layout_height="205dp" />
+            android:layout_height="412dp"/>
     </LinearLayout>
 
 </RelativeLayout>

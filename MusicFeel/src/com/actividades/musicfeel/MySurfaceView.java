@@ -11,6 +11,12 @@ import android.view.SurfaceView;
 
 public class MySurfaceView extends SurfaceView implements Callback {
 	private VisualizacionThread thread;
+	protected int offsetBlue=0;
+	protected int offsetRed=0;
+	private int offsetOrange=0;
+	private int offsetYellow=0;
+	private int offsetGreen=0;
+	
 	public MySurfaceView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -59,17 +65,22 @@ public class MySurfaceView extends SurfaceView implements Callback {
 		   Paint pincel1= new Paint();
 		   int ORANGE= Color.rgb(255, 153, 0);
 		   
+		   
+		   
+		   pincel1.setColor(Color.BLUE);
+		   canvas.drawCircle(ancho/2, altura/2, 200+offsetBlue, pincel1);
+		   
 		   pincel1.setColor(Color.RED);
-		   canvas.drawCircle(ancho/2, altura/2, 180, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 160+offsetRed, pincel1);
 		   
 		   pincel1.setColor(ORANGE);
-		   canvas.drawCircle(ancho/2, altura/2, 130, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 120+offsetOrange, pincel1);
 		   
 		   pincel1.setColor(Color.YELLOW);
-		   canvas.drawCircle(ancho/2, altura/2, 80, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 80+offsetYellow, pincel1);
 		   
 		   pincel1.setColor(Color.GREEN);
-		   canvas.drawCircle(ancho/2, altura/2, 40, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 40+offsetGreen, pincel1);
 	   
 		   
 	   }

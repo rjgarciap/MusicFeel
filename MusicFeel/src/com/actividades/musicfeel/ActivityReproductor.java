@@ -22,8 +22,8 @@ public class ActivityReproductor extends Activity {
 	private ImageButton pause;
 	private TextView nombre;
 	private LinearLayout visualizacion;
-        private MySurfaceView mySV;
-	
+    private MySurfaceView mySV;
+    
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.activity_reproductor);
@@ -51,6 +51,8 @@ public class ActivityReproductor extends Activity {
 			@Override
 			public void onClick(View v) {
 				reproductor.pause();
+				play.setVisibility(View.VISIBLE);
+				pause.setVisibility(View.INVISIBLE);
 			}
 		});
 		
@@ -61,8 +63,7 @@ public class ActivityReproductor extends Activity {
 			try {
 				nombre.setText(datos.getString("nombre"));
 				reproductor.setDataSource(datos.getString("resultado"));
-				reproductor.prepare();
-				reproductor.start();
+				play();
 				
 				
 			} catch (IllegalArgumentException e) {
@@ -86,6 +87,8 @@ public class ActivityReproductor extends Activity {
 	protected void onPause(){
 		super.onPause();
 		reproductor.pause();
+		play.setVisibility(View.VISIBLE);
+		pause.setVisibility(View.INVISIBLE);
 		}
 	
 	
@@ -110,7 +113,15 @@ public class ActivityReproductor extends Activity {
 			e.printStackTrace();
 		}
 		reproductor.start();
+		play.setVisibility(View.INVISIBLE);
+		pause.setVisibility(View.VISIBLE);
 	}
 	
+	public void pause(){
+		
+		reproductor.pause();
+		play.setVisibility(View.VISIBLE);
+		pause.setVisibility(View.INVISIBLE);
+	}
 
 }

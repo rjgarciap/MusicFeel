@@ -14,16 +14,35 @@
         android:background="#FEDBA6" >
 
         <ImageButton
-            android:id="@+id/ic_media_play"
+            android:id="@+id/previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_play" />
+            android:src="@android:drawable/ic_media_previous" />
+		
+        <RelativeLayout
+            android:id="@+id/imagenes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
+	        <ImageButton
+	            android:id="@+id/ic_media_pause"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@android:drawable/ic_media_pause"
+	            android:visibility="invisible" />
+	
+	        <ImageButton
+	            android:id="@+id/ic_media_play"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@android:drawable/ic_media_play" />
+		</RelativeLayout>
+		
         <ImageButton
-            android:id="@+id/ic_media_pause"
+            android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_pause" />
+            android:src="@android:drawable/ic_media_next" />
 
         <ImageButton
             android:id="@+id/stop"

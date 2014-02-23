@@ -6,24 +6,53 @@
     tools:ignore="ContentDescription" >
 
     <LinearLayout
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="412dp"
+        android:layout_above="@+id/ButonsLayout"
+        android:orientation="horizontal" >
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ButonsLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="#FEDBA6" >
+        android:layout_alignParentLeft="true"
+        android:background="#FEDBA6"
+        android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/ic_media_play"
+            android:id="@+id/previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_play" />
+            android:src="@android:drawable/ic_media_previous" />
+		
+        <RelativeLayout
+            android:id="@+id/imagenes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
+	        <ImageButton
+	            android:id="@+id/ic_media_pause"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@android:drawable/ic_media_pause"
+	            android:visibility="invisible" />
+	
+	        <ImageButton
+	            android:id="@+id/ic_media_play"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@android:drawable/ic_media_play" />
+		</RelativeLayout>
+		
         <ImageButton
-            android:id="@+id/ic_media_pause"
+            android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_pause" />
+            android:src="@android:drawable/ic_media_next" />
 
         <ImageButton
             android:id="@+id/stop"
@@ -36,23 +65,12 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:ellipsize="marquee"
-            android:singleLine="true"
             android:fadingEdge="horizontal"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
-             />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/surfaceView"
-        android:layout_width="match_parent"
-        android:layout_height="412dp"
-        android:layout_above="@+id/ButonsLayout"
-        android:orientation="horizontal" >
-
-
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true" />
     </LinearLayout>
 
 </RelativeLayout>

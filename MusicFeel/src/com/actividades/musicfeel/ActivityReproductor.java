@@ -21,8 +21,7 @@ public class ActivityReproductor extends Activity {
 	private ImageButton pause;
 	private TextView nombre;
 	
-	private boolean first=false;
-	private int savePos=0;
+
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.activity_reproductor);
@@ -30,10 +29,7 @@ public class ActivityReproductor extends Activity {
 		pause=(ImageButton)findViewById(R.id.ic_media_pause);
 		nombre=(TextView) findViewById(R.id.nombre_cancion);
 		nombre.setSelected(true);
-		if(bundle!=null){
-		first=bundle.getBoolean("first");
-		savePos=bundle.getInt("posicion");
-		}
+		
 		play.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -55,11 +51,9 @@ public class ActivityReproductor extends Activity {
 		Bundle datos=getIntent().getExtras();
 		if(datos!=null){
 			try {
-				first=true;
 				nombre.setText(datos.getString("nombre"));
 				reproductor.setDataSource(datos.getString("resultado"));
 				reproductor.prepare();
-				reproductor.seekTo(savePos);
 				reproductor.start();
 				
 				
@@ -87,26 +81,7 @@ public class ActivityReproductor extends Activity {
 		}
 	
 	
-	@Override
-	   protected void onSaveInstanceState(Bundle guardarEstado) {
-	         super.onSaveInstanceState(guardarEstado);
-	         if (reproductor != null) {
-	                int pos = reproductor.getCurrentPosition();
-	                guardarEstado.putInt("posicion", pos);
-	         }
-	   }
-	
-	@Override
-	   protected void onRestoreInstanceState(Bundle recEstado) {
-	         super.onRestoreInstanceState(recEstado);
-	         if (recEstado != null) {
-	                savePos = recEstado.getInt("posicion");
-	         }
-	   }
-	@Override
-	public void onConfigurationChanged(Configuration newConfig){
-		super.onConfigurationChanged(newConfig);
-	}
+
 	
 	@Override
 	protected void onDestroy() {

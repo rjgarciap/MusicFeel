@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name="ListaMusica"></activity>
-        <activity android:name="ActivityReproductor"></activity>
+        <activity android:name="ActivityReproductor"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
     </application>
 
 </manifest>

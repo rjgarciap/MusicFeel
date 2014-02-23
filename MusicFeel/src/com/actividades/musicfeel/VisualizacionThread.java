@@ -28,6 +28,11 @@ public class VisualizacionThread extends Thread{
 			try{
 				canvas=sh.lockCanvas(null);
 				synchronized(sh){
+					if(view.offsetRed<30){
+						   view.offsetRed++;
+						   }else{
+							   view.offsetRed=0;
+						   }
 					view.onDraw(canvas);
 				}
 			}catch(NullPointerException a){

@@ -44,7 +44,6 @@
             android:focusableInTouchMode="true"
              />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"

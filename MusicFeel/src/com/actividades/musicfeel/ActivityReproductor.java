@@ -22,7 +22,7 @@ public class ActivityReproductor extends Activity {
 	private ImageButton pause;
 	private TextView nombre;
 	private LinearLayout visualizacion;
-    private MySurfaceView mySV;
+        private MySurfaceView mySV;
 	
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);

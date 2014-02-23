@@ -142,7 +142,6 @@ public class ListaMusica extends ListActivity {
 	
 	protected void onPause(){
 		super.onPause();
-		finish(); //termina la actividad
 		}
 
 	 public static String getExtension(String filename) {

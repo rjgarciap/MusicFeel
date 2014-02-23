@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -20,15 +21,22 @@ public class ActivityReproductor extends Activity {
 	private ImageButton play;
 	private ImageButton pause;
 	private TextView nombre;
+	private LinearLayout visualizacion;
+    private MySurfaceView mySV;
 	
-
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.activity_reproductor);
+		
+		mySV=new MySurfaceView(this);
+		
 		play=(ImageButton) findViewById(R.id.ic_media_play);
 		pause=(ImageButton)findViewById(R.id.ic_media_pause);
 		nombre=(TextView) findViewById(R.id.nombre_cancion);
 		nombre.setSelected(true);
+		
+		visualizacion=(LinearLayout) findViewById(R.id.surfaceView);
+		visualizacion.addView(mySV);
 		
 		play.setOnClickListener(new View.OnClickListener() {
 			

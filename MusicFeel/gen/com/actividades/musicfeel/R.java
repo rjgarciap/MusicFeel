@@ -34,11 +34,10 @@ public final class R {
     }
     public static final class id {
         public static final int ButonsLayout=0x7f090005;
-        public static final int VideoLayout=0x7f09000a;
-        public static final int action_settings=0x7f09000d;
+        public static final int action_settings=0x7f09000c;
         public static final int boton_archivo=0x7f090003;
         public static final int boton_grabacion=0x7f090004;
-        public static final int dir_actual=0x7f09000c;
+        public static final int dir_actual=0x7f09000b;
         public static final int ic_media_pause=0x7f090007;
         public static final int ic_media_play=0x7f090006;
         public static final int icono_grabar=0x7f090001;
@@ -46,7 +45,7 @@ public final class R {
         public static final int icono_stop=0x7f090002;
         public static final int nombre_cancion=0x7f090009;
         public static final int stop=0x7f090008;
-        public static final int surfaceView=0x7f09000b;
+        public static final int surfaceView=0x7f09000a;
     }
     public static final class layout {
         public static final int activity_grabadora=0x7f030000;

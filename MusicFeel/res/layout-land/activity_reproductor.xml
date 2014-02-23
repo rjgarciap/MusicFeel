@@ -46,16 +46,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/VideoLayout"
+        android:id="@+id/surfaceView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="412dp"
         android:layout_above="@+id/ButonsLayout"
         android:orientation="horizontal" >
 
-        <VideoView
-            android:id="@+id/surfaceView"
-            android:layout_width="fill_parent"
-            android:layout_height="205dp" />
+
     </LinearLayout>
 
 </RelativeLayout>

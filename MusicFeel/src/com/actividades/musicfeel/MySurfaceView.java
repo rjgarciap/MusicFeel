@@ -68,16 +68,16 @@ public class MySurfaceView extends SurfaceView implements Callback {
 		   
 		   
 		   pincel1.setColor(Color.BLUE);
-		   canvas.drawCircle(ancho/2, altura/2, 200+offsetBlue, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 200+offsetBlue+offsetRed+offsetOrange+offsetYellow+offsetGreen, pincel1);
 		   
 		   pincel1.setColor(Color.RED);
-		   canvas.drawCircle(ancho/2, altura/2, 160+offsetRed, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 160+offsetRed+offsetOrange+offsetYellow+offsetGreen, pincel1);
 		   
 		   pincel1.setColor(ORANGE);
-		   canvas.drawCircle(ancho/2, altura/2, 120+offsetOrange, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 120+offsetOrange+offsetYellow+offsetGreen, pincel1);
 		   
 		   pincel1.setColor(Color.YELLOW);
-		   canvas.drawCircle(ancho/2, altura/2, 80+offsetYellow, pincel1);
+		   canvas.drawCircle(ancho/2, altura/2, 80+offsetYellow+offsetGreen, pincel1);
 		   
 		   pincel1.setColor(Color.GREEN);
 		   canvas.drawCircle(ancho/2, altura/2, 40+offsetGreen, pincel1);

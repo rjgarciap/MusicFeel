@@ -1,6 +1,7 @@
 #include <jni.h>
 #include "ffta.h"
 
+
 /*                                                                        */
 /*         La estructura de la fft es la siguiente:                       */
 /*                                                                        */
@@ -30,8 +31,7 @@
 /* ** FFT and FHT routines <=> Copyright 1988, 1993; Ron Mayer. */
 
 
-
-void Java_android_equalizer_AudioSenseActivity_fht(float fz[257])
+Java_com_actividades_musicfeel_ActivityGrabadora_fht(float fz[257])
 {
    int i,k,k1,k2,k3,k4,kx;
    float *fi,*fn,*gi;
@@ -146,11 +146,11 @@ void Java_android_equalizer_AudioSenseActivity_fht(float fz[257])
    transform ends up in the second half of the array.
    ** FFT and FHT routines <=> Copyright 1988, 1993; Ron Mayer. */
 
- void  Java_android_equalizer_AudioSenseActivity_realfft (JNIEnv* env,jobject this,jfloat real[257])
+void  Java_com_actividades_musicfeel_ActivityGrabadora_realfft (JNIEnv* env,jobject this,jfloat real[257])
 {
    float a,b;
    int i,j;
-   Java_android_equalizer_AudioSenseActivity_fht(real);
+   Java_com_actividades_musicfeel_ActivityGrabadora_fht(real);
    for (i=1, j=255; i<128; i++, j--) {
       a = real[i];
       b = real[j];
@@ -159,6 +159,8 @@ void Java_android_equalizer_AudioSenseActivity_fht(float fz[257])
    }
    real[256] = 0.0;
 }
+
+
 
 
 

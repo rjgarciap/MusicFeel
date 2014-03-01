@@ -28,7 +28,7 @@
 	        android:layout_height="wrap_content"
 	        android:background="@drawable/record"
 	        android:layout_gravity="center"
-	        android:visibility="invisible" />
+	         />
 
 	    <Button 
 	        android:id="@+id/icono_stop"
@@ -36,6 +36,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center"
 	        android:background="@drawable/stop"
+	        android:visibility="invisible"
 	        />
 	</FrameLayout>
        

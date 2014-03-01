@@ -16,7 +16,6 @@ public class MainActivity extends Activity {
 
 	Button boton_archivo;
 	Button boton_grabar;
-	private Notification.Builder notif;
 	static final int SELECT_MUSIC=123;
 	
 	
@@ -54,18 +53,14 @@ public class MainActivity extends Activity {
 	
 	public void pulsaArchivo(){
 		Intent i = new Intent(this,ListaMusica.class);
-		startActivityForResult(i, SELECT_MUSIC);
+		startActivity(i);
 	}
 	
 	public void pulsaGrabar(){
-		
+		Intent i= new Intent(this,ActivityGrabadora.class);
+		startActivity(i);
 	}
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode,Intent data){
-		if(requestCode==RESULT_OK && resultCode==SELECT_MUSIC){
-			String cancionSeleccionada=data.getExtras().getString(null);
-		}
-	}
+	
 	
 }

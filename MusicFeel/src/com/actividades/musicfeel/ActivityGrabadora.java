@@ -1,32 +1,98 @@
 package com.actividades.musicfeel;
 
-import android.app.Activity;
-import android.graphics.Canvas;
-import android.os.Bundle;
 import java.util.Timer;
+
+
 import java.util.TimerTask;
+
+
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
+import android.media.AudioTrack;
 import android.media.MediaRecorder.AudioSource;
+import android.media.audiofx.Visualizer;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
-
-public class ActivityGrabadora extends Activity{
+/**
+ * Actividad principal de la aplicación. 
+ * Traduce a vibraciones los sonidos grabados a traves del microfono
+ * para que una persona sorda o sordo-ciega sea capaz de percibir sonidos
+ * y de comunicarse. 
+ * 
+ * @author Ayla Chabouk Jokhadar y Carlos Gomez Gonzalez
+ * @name AudioSense
+ * @version 1.0
+ * @date 24/04/2012
+ */
+public class ActivityGrabadora extends Activity {
+	private static final float VISUALIZER_HEIGHT_DIP = 50f;
+	/**
+	 * Boton de Salir
+	 * Con su pulsacion salimos de la aplicacion.
+	 */
+	private Button b;
+	/**
+	 * Grupo que une 4 radioButtons, para decidir
+	 * el tiempo máximo que dura el patron de vibracion.
+	 * Solo se puede seleccionar uno de los 4.
+	 */
+	private RadioGroup rBG;
+	/**
+	 * RadioButton perteneciente al grupo rBG.
+	 * Duracion maxima del patron de vibración 100ms.
+	 */
+	private RadioButton rB1;
+	/**
+	 * RadioButton perteneciente al grupo rBG.
+	 * Duracion maxima del patron de vibración 200ms.
+	 */ 
+	private RadioButton rB2;
+	/**
+	 * RadioButton perteneciente al grupo rBG.
+	 * Duracion maxima del patron de vibración 500ms.
+	 */
+	private RadioButton rB3;
+	/**
+	 * RadioButton perteneciente al grupo rBG.
+	 * Duracion maxima del patron de vibración 1000ms.
+	 */
+	private RadioButton rB4;
+	/**
+	 * Variable que decide que boton esta activado, 
+	 * Si el boton activado es rB1 vale 1
+	 * Si el boton activado es rB1 vale 2
+	 * Si el boton activado es rB1 vale 5
+	 * Si el boton activado es rB1 vale 10
+	 */
 	private int boton;
-	private Button bGrabar;
-	
+	/**
+	 * Check Box 
+	 * Para decidir si el sonido a grabar se trata de voz o musica
+	 */
+	private CheckBox spiner;
 	/**
 	 * Variable que define en que buffer se graba el sonido captado por
 	 * el micrófono, ademas de en que formato, codificacion... se hace.
@@ -51,7 +117,13 @@ public class ActivityGrabadora extends Activity{
         * Tamaño minimo del buffer de grabacion
         */
 	private int N;
-
+	/**
+	 * Toggle buton
+	 * Boton de doble pulsacion que determina si ponemos en funcionamiento la aplicacion
+	 * o terminamos de hacerlo, segun la posicion que tenga (según la pulsación anterior).
+	 * Primera pulsación activación, segunda desactivación y así sucesivamente.
+	 */
+	private ToggleButton tb;
 	/**
 	 * Declaracion del metodo que importamos de un codigo C
 	 * @param r, muestras grabadas por el microfono.
@@ -113,7 +185,10 @@ public class ActivityGrabadora extends Activity{
 	 * pero en unidades logaritmicas.
 	 */
 	private float[] energiasMediasDb;
-
+	/**
+	 * Array auxiliar que nos ayuda a dibujar el ecualizador.
+	 */
+	private float[] energiasMediasDbDibuja;
 	/**
 	 * Variable que guarda la suma de la energia de las 128 muestras
 	 * multiplicadas cada una por la posicion que ocupa en el array (media ponderada).
@@ -158,7 +233,22 @@ public class ActivityGrabadora extends Activity{
 	 * Objeto de la clase Vibrator que se encargara de las vibraciones.
 	 */
     private Vibrator vibra;
-
+    /**
+     * Objeto de la clase Canvas para dibujar en la pantalla el ecualizador.
+     */
+	private Canvas canvas;
+	/**
+	 * Interfaz grafica de tipo lineal.
+	 */
+    private LinearLayout minearLayout;
+    /**
+     * Objeto de la clase VisualizerView que definira que veremos en la pantalla.
+     */
+    private VisualizerView mVisualizerView;
+    /**
+     * Objeto de la clase TextView que define el texto que aparece por pantalla.
+     */
+    private TextView mStatusTextView;
     /**
      * Frecuencia en Hz en la que esta la maxima energia de la señal.
      */
@@ -181,19 +271,51 @@ public class ActivityGrabadora extends Activity{
      *  Importamos la libreria formada por el codigo C
      */
     static {
-    	 Log.i("load so > ","load so");
 		System.loadLibrary("FFT");
-		
-	}
-    
+		}
+	/**
+	 * Metodo que se inicia al arranque de la aplicacion.
+	 * Inicializamos los constructores, la interfaz grafica,
+	 * ademas de definir los listeners de los botones.
+	 * 
+	 *  @param savedInstanceState
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grabadora);      
-        
-        bGrabar=(Button) findViewById(R.id.icono_grabar);
-        
-        /**
+		mStatusTextView = new TextView(this);
+		//Creacion de la intefaz de tipo lineal
+        minearLayout = new LinearLayout(this);
+        minearLayout.setOrientation(LinearLayout.VERTICAL);
+        minearLayout.addView(mStatusTextView);
+        setContentView(minearLayout);        
+        metodo();
+	}
+	/**
+	 * Metodo llamado en el metodo onCreate para la inicializacion de las variables.
+	 */
+	public void metodo (){
+		/**
+		 * Constructor 
+		 * radio botones y del radio grupo que los unira.
+		 */
+		rB1 = new RadioButton (this);
+		rBG = new RadioGroup (this);
+		rB2 = new RadioButton (this);
+		rB3 = new RadioButton (this);
+		rB4 = new RadioButton (this);
+		rBG = new RadioGroup (this);
+		/**
+		 * Constructor
+		 * Boton de Salir.
+		 */
+		b = new Button (this);
+		/**
+		 * Constructor
+		 * Check Box para la seleccion si es voz o música.
+		 */
+		spiner = new CheckBox (this);
+		/**
 		 * Tamaño minimo del buffer de grabación.
 		 */
 		N = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
@@ -211,7 +333,11 @@ public class ActivityGrabadora extends Activity{
 		 * Array para tratar las muestras grabadas.
 		 */
 		info = new short [256][257];
-		
+		/**
+		 * Constructor
+		 * Boton de doble pulsacion.
+		 */
+		tb = new ToggleButton (this);
 		/**
 		 * Inicializacion de arrays.
 		 */
@@ -221,6 +347,7 @@ public class ActivityGrabadora extends Activity{
 		
 		energiasMediasDb = new float [28];
 		
+		energiasMediasDbDibuja = new float [28];
 		
 		patrones = new long [3];
 		/**
@@ -233,59 +360,208 @@ public class ActivityGrabadora extends Activity{
 		 */
 		grabando=0;
 		voz = 0;
-		w=1;
 		boton=1;
-        
-        bGrabar.setOnClickListener(new View.OnClickListener() {
-		
-        	
-			@Override
+		w=1;
+		/**
+		 * Constructor
+		 * Interfaz grafica de definicion de sus parametros principales
+		 * para los componentes que la van a componer.
+		 */
+		mVisualizerView = new VisualizerView(this);
+        mVisualizerView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.FILL_PARENT,
+                (int)(VISUALIZER_HEIGHT_DIP * getResources().getDisplayMetrics().density)));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        mVisualizerView.setLayoutParams(layoutParams);
+        /**
+         * Configuracion de los textos, anchos y largos de los botones.
+         */
+        rB1.setText("10Hz");
+        rB2.setText("5Hz");
+        rB3.setText("2Hz");
+        rB4.setText("1Hz");
+        b.setText("Salir");
+        b.setWidth(200);
+        b.setHeight(10);
+        tb.setTextOff("Comenzar");
+        tb.setLayoutParams(layoutParams);
+        tb.setTextOn("Terminar");
+        spiner.setHeight(20);
+        spiner.setText("Voz");
+        /**
+         * Definimos la orientacion de los componentes de la interfaz.
+         */
+        rBG.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout row = new LinearLayout
+        		(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout row1 = new LinearLayout
+        		(this);
+        row1.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout row2 = new LinearLayout
+        		(this);
+        row2.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout row3 = new LinearLayout
+        		(this);
+        row3.setOrientation(LinearLayout.HORIZONTAL);
+        /**
+         * Simulamos dos pulsaciones en el boton de doble pulsacion
+         * para que aparezca al encender la aplicacion la palabra comenzar
+         * en el boton.
+         */
+        tb.performClick();
+        tb.performClick();
+        /**
+         * Listener del boton Empezar y Terminar
+         * Define que hacer cuando pulsamos el boton de doble pulsacion 
+         * En la primera pulacion:
+         * Vibrara para señalar que ha comenzado
+         * Comprobara el check box, para ver si es voz o musica
+         * Comprobara los radio botones
+         * Comenzara a grabar
+         * Iniciara el temporizador
+         * Iniciara el segundo hilo para el calculo de las energias
+         * En la segunda pulsacion:
+         * Cancelamos las vibraciones
+         * Cancelamos el temporizador
+         * Vibra para señalar que ha terminado
+         */
+		tb.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				//Vibra una vez para indicar que comenzamos el proceso
-				Vibrator vi = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-				vi.vibrate(500);
-				vibra = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-				
-				n=1;
-				grabando = 1;  
-				//Comienza a grabar la aplicacion
-				audio.startRecording();
-				vibra = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-				//Creacion del temporizador
-				t = new Timer();
-				scanTask = new TimerTask() {
-			        public void run() {
-			                handler.post(new Runnable() {
-			                        public void run() {
-			                        if(w>=boton){
-			                        	vibra.cancel();
-			                        	vibracion();
-			                        	w=1;
-			                        	if (grabando==1){
-			                   			 vibra.vibrate(patrones,0); 
-			                               }
-			                               else{
-			                              	 vibra.cancel();
-			                               }
-			                        }
-			                        else{
-			                        	w++;
-			                        }
-
-			                        }
-			               });
-			        }};
-			    //Definimos el periodo del Timer, 100ms    
-			    t.schedule(scanTask, 0, 100); 
-			    //Creacion del segundo hilo para procesar la informacion
-				new MiTarea2().execute();
-				
+				if (tb.isChecked()) {
+					//Vibra una vez para indicar que comenzamos el proceso
+					Vibrator vi = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+					vi.vibrate(500);
+					vibra = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+					//Comprobacion si es para voz o no el procesamiento de la informacion
+			        if (spiner.isChecked()) {
+			            voz = 1;
+			        }
+			        else {
+			        	voz = 0;
+			        }
+			        //Comprobacion de los radio botones
+			        if (rB1.isChecked()){
+			        	boton=1;
+			        }
+			        else if (rB2.isChecked()){
+			        	boton=2;
+			        }
+			        else if (rB3.isChecked()){
+			        	boton=5;
+			        }
+			        else if (rB4.isChecked()){
+			        	boton=10;
+			        }
+			        else {
+			        	boton=1;
+			        }
+			        
+					n=1;
+					grabando = 1;  
+					//Comienza a grabar la aplicacion
+					audio.startRecording();
+					vibra = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+					//Creacion del temporizador
+					t = new Timer();
+					scanTask = new TimerTask() {
+				        public void run() {
+				                handler.post(new Runnable() {
+				                        public void run() {
+				                        if(w>=boton){
+				                        	vibra.cancel();
+				                        	vibracion();
+				                        	w=1;
+				                        	if (grabando==1){
+				                   			 vibra.vibrate(patrones,0); 
+				                               }
+				                               else{
+				                              	 vibra.cancel();
+				                               }
+				                        }
+				                        else{
+				                        	w++;
+				                        }
+				                         mVisualizerView.updateVisualizer();
+				                        }
+				               });
+				        }};
+				    //Definimos el periodo del Timer, 100ms    
+				    t.schedule(scanTask, 0, 100); 
+				    //Creacion del segundo hilo para procesar la informacion
+					new MiTarea2().execute();
+			    } else {
+					grabando=0;
+					//Actualizamos el ecualizador para que se borre de la pantalla
+					mVisualizerView.updateVisualizer();
+					//Paramos el temporizador
+					t.cancel();
+					//Cancelamos las vibraciones
+					vibra.cancel();
+					//Vibra dos veces para indicar que ha terminado el proceso
+					long [] patron = {0,500,200,500};
+					vibra.vibrate(patron,-1);
+			    }
 			}
 		});
-        
-
+		/**
+		 * Listener del boton Salir
+		 * Termina con la aplicacion y con la vibracion
+		 */
+		b.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				grabando=0;
+				onDestroy(); 
+			}
+		});
+		//Añade a la pantalla los elementos de la interfaz a la pantalla
+		//en la posicion adecuada
+		row.addView(b);
+		row.addView(spiner);
+		row1.addView(tb);
+		rBG.addView(rB1);
+		rBG.addView(rB2);
+		rBG.addView(rB3);
+		rBG.addView(rB4);       
+		minearLayout.addView(row);
+        minearLayout.addView(row2);
+        minearLayout.addView(row1);
+        minearLayout.addView(rBG);
+        minearLayout.addView(row3);
+        minearLayout.addView(mVisualizerView);
 	}
-	
+	/**
+	 * Metodo que define que hacer cuando la aplicacion
+	 * se pone en modo Pausa. En nuestro caso cierra la
+	 * aplicacion.
+	 */
+	public void onPause(){
+		super.onPause();
+	}
+	/**
+	 * Metodo que define que hacer cuando la aplicacion
+	 * se pone en modo Parada. En nuestro caso tambien cierra la
+	 * aplicacion
+	 */
+	public void onStop(){
+		if (grabando == 1) {
+			tb.performClick();
+			grabando=0;
+		}
+		super.onStop();
+	}
+	/**
+	 * Metodo que define que hacer cuando la aplicacion
+	 * se termina (pulsación boton Salir). Termina con la actividad y 
+	 * cancela todas las vibraciones.
+	 */
+	public void onDestroy() {
+		vibra.cancel();
+		finish();
+		super.onDestroy();
+	}
 	/**
 	 * Metodo
 	 * Calcula los patrones de vibracion a partir 
@@ -357,9 +633,6 @@ public class ActivityGrabadora extends Activity{
 					muestras[q]= 0;
 					muestras[q] = (float) buffer[q];
 				}
-				
-
-				i=0;
 				//Realizamos la FFT
 				realfft(muestras);
 				//Inicializamos las variables
@@ -516,7 +789,135 @@ public class ActivityGrabadora extends Activity{
 			audio.stop();
 		}	
 	}
+	/**
+	 * Clase
+	 * Determina lo que vemos en la interfaz grafica ademas del ecualizador grafico
+	 */
+	class VisualizerView extends View {
+		/**
+		 * Objeto de la clase Paint que define el color del ecualizador
+		 */
+	    private Paint mForePaint = new Paint();
+	    /**
+	     * Objeto que define el color negro
+	     */
+	    private Paint negro = new Paint();
+	    /**
+	     * Array donde definimos los colores del ecualizador grafico
+	     */
+		public int colores [][] = new int [22][3];
+		/**
+		 * Definicion de constantes
+		 */
+	    private float altura =0;
+	    private float alturaTotal=490;
+	    private float ancho = -20;
+	    private int o =0;
+	    public VisualizerView(Context context) {
+	        super(context);
+	        init();
+	    }
+	    /**
+	     * Metodo
+	     * Rellena el array con constantes de los colores que conformaran el ecualizador grafico
+	     */
+	    private void rellena (){
+	    	colores[0][1]=255;
+	    	colores[1][1]=245;
+	    	colores[2][1]=235;
+	    	colores[3][1]=225;
+	    	colores[4][1]=215;
+	    	colores[5][1]=205;
+	    	colores[6][1]=195;
+	    	colores[7][1]=185;
+	    	colores[8][1]=175;
+	    	colores[9][1]=165;
+	    	colores[10][0]=185;
+	    	colores[11][0]=195;
+	    	colores[12][0]=205;
+	    	colores[13][0]=215;
+	    	colores[14][0]=225;
+	    	colores[15][0]=235;
+	    	colores[16][0]=255;
+	    	colores[17][0]=170;
+	    	colores[18][0]=190;
+	    	colores[19][0]=210;
+	    	colores[20][0]=235;
+	    	colores[21][0]=255;
+	    	for (int g = 0;g<10;g++){
+	    		colores[g][0]=0;
+	    		colores[g][2]=0;
+	    	}
+	    	for (int g = 10;g<17;g++){
+	    		colores[g][1]=colores[g][0];
+	    		colores[g][2]=0;
+	    	}
+	    	for (int g = 17;g<22;g++){
+	    		colores[g][1]=0;
+	    		colores[g][2]=0;
+	    	}
+	    }
+	    /**
+	     * Metodo
+	     * Incializacion de los colores del ecualizador y del negro
+	     */
+	    private void init() {
+	        mForePaint.setStrokeWidth(1f);
+	        mForePaint.setAntiAlias(true);
+	        mForePaint.setColor(Color.rgb(0, 128, 255));
+	        negro.setStrokeWidth(1f);
+	        negro.setAntiAlias(true);
+	        negro.setColor(Color.rgb(0, 0, 0));
+	    }
+	    /**
+	     * Metodo
+	     * Actualiza el ecualizador grafico
+	     */
+	    public void updateVisualizer() {
+	    	invalidate();
+	    }
+	    /**
+	     * Metodo
+	     * Dibuja el ecualizador grafico
+	     */
+	    @Override
+	    protected void onDraw(Canvas canvas) {
+	        super.onDraw(canvas);
+	        rellena();
+	        for (int x =0;x<28;x++){
+	        	energiasMediasDbDibuja[x]=energiasMediasDb[x];
+	        }
+	        ancho=-17;
+	        if (grabando==1){
+	        	for (int h =0;h<28;h++){
+	        		ancho+=17;
+	        		while (energiasMediasDbDibuja[h]!=0){
+	        			if(energiasMediasDbDibuja[h]<20){
+	        				alturaTotal-=20;
+	        				altura =alturaTotal-energiasMediasDbDibuja[h];
+	        				mForePaint.setColor(Color.rgb(colores[o][0], colores[o][1], colores[o][2]));
+	        				canvas.drawRect(ancho,altura,ancho+12, alturaTotal, mForePaint);
+	        				o=0;
+	        				energiasMediasDbDibuja[h] =0;
+	        				alturaTotal=490;
+	        			}
+	        			else {
+	        				alturaTotal -=20;
+	        				mForePaint.setColor(Color.rgb(colores[o][0], colores[o][1], colores[o][2]));
+	        				canvas.drawRect(ancho,alturaTotal-20,ancho+12, alturaTotal, mForePaint);
+	        				alturaTotal -=1;
+	        				canvas.drawRect(ancho,alturaTotal-1,ancho+12, alturaTotal, negro);
+	        				energiasMediasDbDibuja[h]-=21;
+	        				o++;
+	        			}
+	        			
+	        		}
+	        	}
+	        }
+	        if (grabando ==0) {
+	        }
+	                
+	    }
+	}
 }
-
-
 	

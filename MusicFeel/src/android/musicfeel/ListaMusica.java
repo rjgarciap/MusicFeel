@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore.Files;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.View;

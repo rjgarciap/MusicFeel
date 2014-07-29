@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" 
+    android:orientation="vertical">
+
+    <TextView
+	    android:id="@+id/dir_actual"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"/>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/dir_actual"
+        android:background="#FF008080" 
+        android:cacheColorHint="#FF008080">
+
+    </ListView>
+    
+	<TextView
+	    android:id="@android:id/empty"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="No hay canciones en la carpeta Music" 
+	    android:layout_gravity="center"
+	    android:textSize="16sp"
+	    android:textStyle="bold" />
+    
+
+	
+	
+</LinearLayout>

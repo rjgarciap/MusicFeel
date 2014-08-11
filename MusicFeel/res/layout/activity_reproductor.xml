@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:ignore="ContentDescription" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    
+   
+   <LinearLayout
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
+        android:layout_weight="1" >
 
-       
+   </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="0"
+        android:orientation="vertical" >
+
     <LinearLayout
         android:id="@+id/ButonsLayout"
         android:layout_width="fill_parent"
@@ -92,19 +108,9 @@
 
         </RadioGroup>
     </HorizontalScrollView>
-
-    <LinearLayout
-        android:id="@+id/surfaceView"
-        android:layout_width="match_parent"
-        android:layout_height="380dp"
-        android:layout_alignParentLeft="true"
-        android:orientation="horizontal" >
-
-        
-
     </LinearLayout>
-
-<LinearLayout
+    
+    <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     android:orientation="vertical">
@@ -119,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_media_pause"
-                android:visibility="invisible" 
+                android:visibility="gone" 
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"/>
 
@@ -129,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:visibility="invisible" 
+                android:visibility="gone" 
                 android:src="@android:drawable/ic_media_play" />
             
    
@@ -142,7 +148,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="right"
-            android:visibility="invisible"
+            android:visibility="gone"
              >
 
             <RadioButton
@@ -165,4 +171,4 @@
         </RadioGroup>
         </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

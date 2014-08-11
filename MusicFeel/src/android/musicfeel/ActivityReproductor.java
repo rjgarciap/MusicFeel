@@ -42,7 +42,7 @@ import android.widget.Toast;
 
 /**
  * Actividad ActivityReproductor. 
- * Traduce a vibraciones y una visualizacion gráfica los sonidos a partir de un
+ * Traduce a vibraciones y una visualizacion grï¿½fica los sonidos a partir de un
  * fichero de musica para que de esta manera una persona sorda pueda disfrutar de 
  * la musica. 
  * 
@@ -125,7 +125,7 @@ public class ActivityReproductor extends Activity {
     private long [] patrones;
     
     /**
-     * Tamaño minimo del buffer de reproduccion
+     * Tamaï¿½o minimo del buffer de reproduccion
      */
     int minBufferSize;
     
@@ -143,7 +143,7 @@ public class ActivityReproductor extends Activity {
 	 */
 	private float energiaTotalDbCalculo;
 	/**
-     * Frecuencia en Hz en la que esta la maxima energia de la señal.
+     * Frecuencia en Hz en la que esta la maxima energia de la seï¿½al.
      */
     private float frecuenciaMaxEnergia;
     /**
@@ -253,7 +253,7 @@ public class ActivityReproductor extends Activity {
 	
 	/**
 	 * Ciclo de Trabajo con el que vibrara en un determinado momento
-	 * el patron de vibración.
+	 * el patron de vibraciï¿½n.
 	 */
 	private double cicloDeTrabajo;
 	
@@ -292,7 +292,7 @@ public class ActivityReproductor extends Activity {
     private RadioButton radioEcualizadorGroup;
     
     /**
-     * ImageButton correspondiente a pause y play en la orientación portrait
+     * ImageButton correspondiente a pause y play en la orientaciï¿½n portrait
      */
     private ImageButton play_land;
     private ImageButton pause_land;
@@ -311,7 +311,7 @@ public class ActivityReproductor extends Activity {
     private boolean landscape=false;
     
     /**
-     * Objeto de la clase ClienteUDP, encargado de proveer la conexion entre la aplicación y la Raspberry Pi
+     * Objeto de la clase ClienteUDP, encargado de proveer la conexion entre la aplicaciï¿½n y la Raspberry Pi
      */
     private ClienteUDP clienteUDP;
     
@@ -515,10 +515,10 @@ public class ActivityReproductor extends Activity {
 	public void play(){
 		reproduciendo=1;
 		if(landscape){
-			play_land.setVisibility(View.INVISIBLE);
+			play_land.setVisibility(View.GONE);
 			pause_land.setVisibility(View.VISIBLE);
 		}else{
-			play.setVisibility(View.INVISIBLE);
+			play.setVisibility(View.GONE);
 			pause.setVisibility(View.VISIBLE);
 		}
 		new MiTarea2().execute();
@@ -556,7 +556,7 @@ public class ActivityReproductor extends Activity {
         				//Llamamos al metodo que se encarga de calcular y asignar el offset que se le va a
         				//aplicar al radio de los circulos para recrear el movimiento de un altavoz.
         				mVisualizerView.rellenaCirculos();
-        				//Llamamos al metodo que se encarga de calcular la energía y de aqui los 
+        				//Llamamos al metodo que se encarga de calcular la energï¿½a y de aqui los 
         				//parametros necesario para la seleccion de las imagenes.
         				mVisualizerView.calculaInstrumentos();
 	        				if(true){
@@ -596,24 +596,24 @@ public class ActivityReproductor extends Activity {
 	public void alternar(){
 		if(landscape){
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			radioGroup.setVisibility(View.INVISIBLE);
+			radioGroup.setVisibility(View.GONE);
 			radioGroup_land.setVisibility(View.VISIBLE);
 			if(reproduciendo==1){
 				pause_land.setVisibility(View.VISIBLE);
-				pause.setVisibility(View.INVISIBLE);
+				pause.setVisibility(View.GONE);
 			}else{
 				play_land.setVisibility(View.VISIBLE);
-				play.setVisibility(View.INVISIBLE);
+				play.setVisibility(View.GONE);
 			}
 		}else{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			radioGroup.setVisibility(View.VISIBLE);
-			radioGroup_land.setVisibility(View.INVISIBLE);
+			radioGroup_land.setVisibility(View.GONE);
 			if(reproduciendo==1){
-				pause_land.setVisibility(View.INVISIBLE);
+				pause_land.setVisibility(View.GONE);
 				pause.setVisibility(View.VISIBLE);
 			}else{
-				play_land.setVisibility(View.INVISIBLE);
+				play_land.setVisibility(View.GONE);
 				play.setVisibility(View.VISIBLE);
 			}
 		}
@@ -630,10 +630,10 @@ public class ActivityReproductor extends Activity {
 		posLista=0;
 		if(landscape){
 			play_land.setVisibility(View.VISIBLE);
-			pause_land.setVisibility(View.INVISIBLE);
+			pause_land.setVisibility(View.GONE);
 		}else{
 			play.setVisibility(View.VISIBLE);
-			pause.setVisibility(View.INVISIBLE);
+			pause.setVisibility(View.GONE);
 		}
 		//Paramos el temporizador
 		if(t!= null&& vibra!=null){
@@ -685,7 +685,7 @@ public class ActivityReproductor extends Activity {
 	
 	/**
 	 * Clase MiTarea2 que define la hebra en la que se lleva a cabo el 
-	 * procesamiento de la señal y calculo de las energias.
+	 * procesamiento de la seï¿½al y calculo de las energias.
 	 */
 	private class MiTarea3 extends AsyncTask<Void, Integer, Void> {
 		
@@ -744,7 +744,7 @@ public class ActivityReproductor extends Activity {
 							
 							
 							float[]bark=new float[21];
-	                      //Calculo de las energías por bandas basándonos en la escala de Bark
+	                      //Calculo de las energï¿½as por bandas basï¿½ndonos en la escala de Bark
 	        				float continua =energias[0];
 	        				bark[0]= continua;
 	        				int nMuestras=0;
@@ -1058,8 +1058,8 @@ public class ActivityReproductor extends Activity {
 		 * Dibuja donde dibuja las diferentes visualizaciones, dependiendo del valor 
 		 * de la varialbe nVis:
 		 * 0=>Visualizacion Circulos
-		 * 2=>Visualización cuarteto
-		 * 3=>Visualización ecualizador
+		 * 2=>Visualizaciï¿½n cuarteto
+		 * 3=>Visualizaciï¿½n ecualizador
 		 */
 		public void onDraw(Canvas canvas){
 

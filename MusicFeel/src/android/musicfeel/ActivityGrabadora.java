@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 /**
  * Actividad ActivityGrabadora. 
- * Traduce a vibraciones y una visualizacion gráfica los sonidos grabados a 
+ * Traduce a vibraciones y una visualizacion grï¿½fica los sonidos grabados a 
  * traves del microfono para que de esta manera una persona sorda pueda disfrutar 
  * de la musica. 
  * 
@@ -43,7 +43,7 @@ public class ActivityGrabadora extends Activity {
 
 	/**
 	 * Variable que define en que buffer se graba el sonido captado por
-	 * el micrófono, ademas de en que formato, codificacion... se hace.
+	 * el micrï¿½fono, ademas de en que formato, codificacion... se hace.
 	 */
 	private AudioRecord audio;
 
@@ -55,7 +55,7 @@ public class ActivityGrabadora extends Activity {
 	private short[][] info;
 
 	/**
-	 * Variable que define si estamos grabando a traves del micrófono (=1)
+	 * Variable que define si estamos grabando a traves del micrï¿½fono (=1)
 	 * o no (=0).	
 	 */
 	private int grabando=0;
@@ -65,7 +65,7 @@ public class ActivityGrabadora extends Activity {
 	private int n;
 
 	/**
-	 * Tamaño minimo del buffer de grabacion
+	 * Tamaï¿½o minimo del buffer de grabacion
 	 */
 	private int N;
 
@@ -104,7 +104,7 @@ public class ActivityGrabadora extends Activity {
 
 	/**
 	 * Ciclo de Trabajo con el que vibrara en un determinado momento
-	 * el patron de vibración.
+	 * el patron de vibraciï¿½n.
 	 */
 	private double cicloDeTrabajo;
 	/**
@@ -162,7 +162,7 @@ public class ActivityGrabadora extends Activity {
 	private Vibrator vibra;
 
 	/**
-	 * Frecuencia en Hz en la que esta la maxima energia de la señal.
+	 * Frecuencia en Hz en la que esta la maxima energia de la seï¿½al.
 	 */
 	private float frecuenciaMaxEnergia;
 	/**
@@ -193,8 +193,8 @@ public class ActivityGrabadora extends Activity {
 	 */
 	private VisualizerView mVisualizerView;
 	/**
-	 * Objeto de la clase LinearLayout, el cual es representación del Layout que contiene al objeto
-	 * VisualizerView, siendo así éste el lugar donde se dibujara la visualizacion.
+	 * Objeto de la clase LinearLayout, el cual es representaciï¿½n del Layout que contiene al objeto
+	 * VisualizerView, siendo asï¿½ ï¿½ste el lugar donde se dibujara la visualizacion.
 	 */
 	private LinearLayout visualizacion;
 	/**
@@ -254,13 +254,13 @@ public class ActivityGrabadora extends Activity {
 		radioGroup=(RadioGroup)findViewById(R.id.RadioGroup);
 		radioGroup_land=(RadioGroup)findViewById(R.id.RadioGroup_vert);
 		/**
-		 * Tamaño minimo del buffer de grabación.
+		 * Tamaï¿½o minimo del buffer de grabaciï¿½n.
 		 */
 		N = AudioRecord.getMinBufferSize(16000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
 		/**
 		 * Constructor
-		 * Buffer de grabacion de un tamaño 10 veces mayor al minimo.
+		 * Buffer de grabacion de un tamaï¿½o 10 veces mayor al minimo.
 		 * Frecuencia de muestreo de 8000 Hz.
 		 * Fuente de tipo MIC.
 		 * Grabacion en mono.
@@ -519,7 +519,7 @@ public class ActivityGrabadora extends Activity {
 		 * Define que hacer cuando pulsamos sobre el ImageButton recordButton
 		 * Cancelamos las vibraciones
 		 * Cancelamos el temporizador
-		 * Vibra dos veces para señalar que ha parado de grabar
+		 * Vibra dos veces para seï¿½alar que ha parado de grabar
 		 */
 		recordStop.setOnClickListener(new View.OnClickListener() {
 
@@ -657,12 +657,12 @@ public class ActivityGrabadora extends Activity {
 	/**
 	 * Clase 
 	 * Define un hilo paralelo que se ejecutara a la vez que la actividad
-	 * principal para llevar a cabo el tratamiento de la señal.
+	 * principal para llevar a cabo el tratamiento de la seï¿½al.
 	 */
 	private class MiTarea2 extends AsyncTask<Void, Void, Void> {
 		/**
 		 * Metodo
-		 * Se lleva a cabo todo el procesamiento de la señal y el 
+		 * Se lleva a cabo todo el procesamiento de la seï¿½al y el 
 		 * calculo de las energias
 		 */
 		protected Void doInBackground(Void...voids ) {
@@ -703,7 +703,7 @@ public class ActivityGrabadora extends Activity {
 
 
 
-				//Calculo de las energías por bandas basándonos en la escala de Bark
+				//Calculo de las energï¿½as por bandas basï¿½ndonos en la escala de Bark
 				float continua = energias[0];
 				energiasMedias[0]= continua;
 				int nMuestras=0;
@@ -738,7 +738,7 @@ public class ActivityGrabadora extends Activity {
 				//aplicar al radio de los circulos para recrear el movimiento de un altavoz.
 				mVisualizerView.rellenaCirculos();
 
-				//Llamamos al metodo que se encarga de calcular la energía y de aqui los 
+				//Llamamos al metodo que se encarga de calcular la energï¿½a y de aqui los 
 				//parametros necesario para la seleccion de las imagenes.
 				mVisualizerView.calculaInstrumentos();
 
@@ -755,7 +755,7 @@ public class ActivityGrabadora extends Activity {
 			return null;
 		}
 
-		//Metodo que se ejecutara antes del proceso de tratamiento de la señal.
+		//Metodo que se ejecutara antes del proceso de tratamiento de la seï¿½al.
 		protected void onPreExecute () {
 			Toast toast1 =
 					Toast.makeText(getApplicationContext(),
@@ -763,7 +763,7 @@ public class ActivityGrabadora extends Activity {
 			toast1.show();
 		}
 
-		//Metodo que se ejecutara despues del proceso de tratamiento de la señal.
+		//Metodo que se ejecutara despues del proceso de tratamiento de la seï¿½al.
 		@Override
 		protected void onPostExecute(Void result) {
 			Toast toast2 =
@@ -895,8 +895,8 @@ public class ActivityGrabadora extends Activity {
 		 * Dibuja donde dibuja las diferentes visualizaciones, dependiendo del valor 
 		 * de la varialbe nVis:
 		 * 0=>Visualizacion Circulos
-		 * 2=>Visualización cuarteto
-		 * 3=>Visualización ecualizador
+		 * 2=>Visualizaciï¿½n cuarteto
+		 * 3=>Visualizaciï¿½n ecualizador
 		 */
 		public void onDraw(Canvas canvas){
 

@@ -1,127 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:ignore="ContentDescription" >
-
-       
-    <LinearLayout
-        android:id="@+id/ButonsLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/surfaceView"
-        android:background="#FF7700"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_previous" />
-
-        <RelativeLayout
-            android:id="@+id/imagenes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <ImageButton
-                android:id="@+id/ic_media_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_media_pause"
-                android:visibility="invisible" />
-
-            <ImageButton
-                android:id="@+id/ic_media_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_media_play" />
-        </RelativeLayout>
-
-        <ImageButton
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_next" />
-
-        <TextView
-            android:id="@+id/nombre_cancion"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true" />
-    </LinearLayout>
-
-    <HorizontalScrollView
-        android:id="@+id/ToggleButonsLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/ButonsLayout"
-        android:background="#FF7700"
-        android:orientation="horizontal" >
-        
-        <RadioGroup
-            android:id="@+id/RadioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/radioButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/circulos"/>
-            
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cuarteto" />
-            <RadioButton
-                android:id="@+id/radioButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ecualizador" />/
-
-        </RadioGroup>
-    </HorizontalScrollView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
-        android:layout_height="380dp"
+        android:layout_height="0dp"
         android:layout_alignParentLeft="true"
+        android:layout_weight="1"
         android:orientation="horizontal" >
-
-        
-
     </LinearLayout>
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" 
-    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="0"
+        android:orientation="vertical" >
 
-     <RelativeLayout
-         android:id="@+id/imagenes2"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
- >
+        <LinearLayout
+            android:id="@+id/ButonsLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/surfaceView"
+            android:background="#FF7700"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_media_previous" />
+
+            <RelativeLayout
+                android:id="@+id/imagenes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageButton
+                    android:id="@+id/ic_media_pause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_media_pause"
+                    android:visibility="invisible" />
+
+                <ImageButton
+                    android:id="@+id/ic_media_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_media_play" />
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_media_next" />
+
+            <TextView
+                android:id="@+id/nombre_cancion"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/ToggleButonsLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/ButonsLayout"
+            android:background="#FF7700"
+            android:orientation="horizontal" >
+
+            <RadioGroup
+                android:id="@+id/RadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/circulos" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cuarteto" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ecualizador" />
+
+            </RadioGroup>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/imagenes2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
             <ImageButton
                 android:id="@+id/ic_media_pause2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_media_pause"
-                android:visibility="invisible" 
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:src="@android:drawable/ic_media_pause"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/ic_media_play2"
@@ -129,40 +133,37 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:visibility="invisible" 
-                android:src="@android:drawable/ic_media_play" />
-            
-   
-        
-
+                android:src="@android:drawable/ic_media_play"
+                android:visibility="gone" />
         </RelativeLayout>
+
         <RadioGroup
             android:id="@+id/RadioGroup_vert"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_gravity="right"
-            android:visibility="invisible"
-             >
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <RadioButton
                 android:id="@+id/radioButton1_vert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"/>
+                android:text="1" />
 
             <RadioButton
                 android:id="@+id/radioButton2_vert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2" />
+
             <RadioButton
                 android:id="@+id/radioButton3_vert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3" />/
+                android:text="3" />
 
         </RadioGroup>
-        </LinearLayout>
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
